@@ -10,6 +10,5 @@ app.use(express.text());
 app.get('/', (req: Request, res: Response) => {
   res.send('hello world');
 });
-// console.log(process.cwd());
 
 export default app;
