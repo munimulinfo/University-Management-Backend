@@ -1,6 +1,8 @@
+import { Server } from 'http';
 import app from './app';
 import config from './app/config';
 import mongoose from 'mongoose';
+let server: Server;
 
 async function main() {
   try {
@@ -14,3 +16,22 @@ async function main() {
 }
 
 main();
+
+//Asynccronus unhandleRejection listener
+
+process.on('unhandledRejection', () => {
+  console.log(`😈 unahandledRejection is detected , shutting down ...`);
+  if (server) {
+    server.close(() => {
+      process.exit(1);
+    });
+  }
+  process.exit(1);
+});
+
+//syncronus code uncaughtException listenre
+
+process.on('uncaughtException', () => {
+  console.log(`😈 uncaughtException is detected , shutting down ...`);
+  process.exit(1);
+});
